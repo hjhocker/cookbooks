@@ -1,2 +1,2 @@
-cookbook_path [ "/vagrant/cookbooks-oh-my-zsh/cookbooks" ]
+cookbook_path [ "/home/vagrant/.chef/cookbooks" ]
 json_attribs "attributes.json"

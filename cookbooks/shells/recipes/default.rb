@@ -20,5 +20,5 @@ execute 'change-shell' do
 end
 
 execute 'install-oh-my-zsh' do
-  command 'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+  command 'sh -c "`curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh`"'
 end
