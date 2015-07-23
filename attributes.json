@@ -1,5 +1,7 @@
-{ "run_list": [
-   "recipe[shells]",
-   "recipe[utilities]"
- ]
+{   "run_list": 
+    [
+      "recipe[shells]",
+      "recipe[utilities]",
+      "recipe[jenkins]"
+    ]
 }
