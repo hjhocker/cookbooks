@@ -7,14 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-#include_recipe "apt"
-
-file '/home/vagrant/test_file' do
-  content '<html>This is a placeholder for the home page.</html>'
-  mode '0644'
-  owner 'vagrant'
-  group 'vagrant'
-end
+include_recipe 'apt'
 
 apt_repository 'jenkins' do
   uri 'http://pkg.jenkins-ci.org/debian'

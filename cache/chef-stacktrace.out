@@ -1,16 +1,8 @@
-Generated at 2015-07-23 01:04:58 +0000
-Chef::Exceptions::CookbookNotFound: Cookbook apt not found. If you're loading apt from another cookbook, make sure you configure the dependency in your metadata
-/opt/chefdk/embedded/apps/chef/lib/chef/cookbook/cookbook_collection.rb:38:in `block in initialize'
-/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.4.0/lib/ohai/mash.rb:77:in `yield'
-/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.4.0/lib/ohai/mash.rb:77:in `default'
-/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ohai-8.4.0/lib/ohai/mash.rb:77:in `default'
-/opt/chefdk/embedded/apps/chef/lib/chef/run_context.rb:172:in `[]'
-/opt/chefdk/embedded/apps/chef/lib/chef/run_context.rb:172:in `load_recipe'
-/opt/chefdk/embedded/apps/chef/lib/chef/run_context.rb:142:in `block in include_recipe'
-/opt/chefdk/embedded/apps/chef/lib/chef/run_context.rb:141:in `each'
-/opt/chefdk/embedded/apps/chef/lib/chef/run_context.rb:141:in `include_recipe'
-/opt/chefdk/embedded/apps/chef/lib/chef/dsl/include_recipe.rb:26:in `include_recipe'
-/home/vagrant/.chef/cookbooks/jenkins/recipes/default.rb:10:in `from_file'
+Generated at 2015-07-23 01:28:54 +0000
+NoMethodError: No resource or method named `apt_repository' for `Chef::Recipe "default"'
+/opt/chefdk/embedded/apps/chef/lib/chef/dsl/recipe.rb:49:in `rescue in method_missing'
+/opt/chefdk/embedded/apps/chef/lib/chef/dsl/recipe.rb:46:in `method_missing'
+/home/vagrant/.chef/cookbooks/jenkins/recipes/default.rb:19:in `from_file'
 /opt/chefdk/embedded/apps/chef/lib/chef/mixin/from_file.rb:30:in `instance_eval'
 /opt/chefdk/embedded/apps/chef/lib/chef/mixin/from_file.rb:30:in `from_file'
 /opt/chefdk/embedded/apps/chef/lib/chef/cookbook_version.rb:228:in `load_recipe'
