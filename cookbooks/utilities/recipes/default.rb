@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-['vim', 'curl', 'wget', 'git'].each do |pkg|  
+['vim', 'curl', 'wget', 'git', 'g++'].each do |pkg|  
   package pkg do
     action :install
   end
