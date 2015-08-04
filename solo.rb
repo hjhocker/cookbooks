@@ -1,2 +1,2 @@
-cookbook_path [ "/home/vagrant/.chef/cookbooks", "/home/vagrant/.berkshelf/cookbooks" ]
+cookbook_path [ "/home/harrison/.chef/cookbooks", "/home/harrison/.berkshelf/cookbooks" ]
 json_attribs "attributes.json"
