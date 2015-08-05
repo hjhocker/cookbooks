@@ -18,7 +18,7 @@ execute 'set-git-default-email' do
 end
 
 execute 'set-git-efault-name' do
-  command 'git config --global user.name "Harrison"'
+  command 'git config --global user.name "Harrison Hocker"'
 end
 
 execute 'set-git-default-push' do
