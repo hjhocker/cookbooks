@@ -1,6 +1,6 @@
 {   "run_list": 
     [
-      "recipe[utilities]",
-      "recipe[google-chrome]"
+      "recipe[shells]",
+      "recipe[utilities]"
     ]
 }

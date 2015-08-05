@@ -15,6 +15,21 @@ package 'git' do
   action :install
 end
 
-execute 'install-oh-my-zsh' do
-  command 'sh -c "`curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh`"'
+git '/home/harrison/.oh-my-zsh/' do
+  repository "https://github.com/robbyrussell/oh-my-zsh.git"
+  reference "master"
+  action :sync
 end
+
+template '/home/harrison/.oh-my-zsh/themes/robbyrussell.zsh-theme' do
+  source 'robbyrussell.zsh-theme.erb'
+  owner 'harrison'
+  group 'harrison'
+  mode '0644'
+end
+
+execute 'change-shell-to-zsh' do
+  command 'chsh -s /bin/zsh && env zsh'
+end
+
+

@@ -19,5 +19,5 @@ execute 'add-google-chrome-key' do
 end
 
 execute 'install-chrome' do
-  command 'cd /tmp/ && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_i386.deb'
+  command 'cd /tmp/ && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo gdebi google-chrome-stable_current_i386.deb'
 end 
