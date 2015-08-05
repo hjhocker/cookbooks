@@ -20,3 +20,7 @@ end
 execute 'set-git-efault-name' do
   command 'git config --global user.name "Harrison"'
 end
+
+execute 'set-git-default-push' do
+  command 'git config --global push.default matching'
+end
