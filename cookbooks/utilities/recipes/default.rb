@@ -12,3 +12,11 @@
     action :install
   end
 end
+
+execute 'set-git-default-email' do
+  command 'git config --global user.email "hjhocker@gmail.com"'
+end
+
+execute 'set-git-efault-name' do
+  command 'git config --global user.name "Harrison"'
+end
