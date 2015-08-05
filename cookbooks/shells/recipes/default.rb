@@ -41,6 +41,13 @@ template '/root/.oh-my-zsh/themes/robbyrussell.zsh-theme' do
   mode '0644'
 end
 
+template '/home/harrison/.zshrc' do
+  source 'zshrc.erb'
+  owner 'harrison'
+  group 'harrison'
+  mode '0644'
+end
+
 execute 'change-shell-to-zsh' do
   command 'chsh -s /bin/zsh && env zsh'
 end

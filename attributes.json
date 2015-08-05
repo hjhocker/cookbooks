@@ -1,6 +1,8 @@
 {   "run_list": 
     [
       "recipe[shells]",
-      "recipe[utilities]"
+      "recipe[utilities]",
+      "recipe[java]",
+      "recipe[git]"
     ]
 }

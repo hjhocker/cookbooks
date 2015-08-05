@@ -1,0 +1,7 @@
+name             'java'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures java'
+long_description 'Installs/Configures java'
+version          '0.1.0'
