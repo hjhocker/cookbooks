@@ -8,7 +8,7 @@
 #
 
 home = node['home']
-user = Dir.home.split("/")[2]
+user = Dir.home.split("/")[ Dir.home.split("/").size-1 ]
 
 package 'zsh' do
   action :install
