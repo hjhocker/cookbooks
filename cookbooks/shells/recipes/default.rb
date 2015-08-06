@@ -7,6 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
+home = node['home']
+user = Dir.home.split("/")[2]
+
 package 'zsh' do
   action :install
 end
@@ -15,7 +18,7 @@ package 'git' do
   action :install
 end
 
-git '/home/harrison/.oh-my-zsh/' do
+git "#{home}/.oh-my-zsh/" do
   repository "https://github.com/robbyrussell/oh-my-zsh.git"
   reference "master"
   action :sync
@@ -27,25 +30,25 @@ git '/root/.oh-my-zsh/' do
   action :sync
 end
 
-template '/home/harrison/.oh-my-zsh/themes/robbyrussell.zsh-theme' do
+template "#{home}/.oh-my-zsh/themes/robbyrussell.zsh-theme" do
   source 'robbyrussell.zsh-theme.erb'
-  owner 'harrison'
-  group 'harrison'
-  mode '0644'
+  owner "#{user}"
+  group "#{user}"
+	mode '0644'
 end
 
 template '/root/.oh-my-zsh/themes/robbyrussell.zsh-theme' do
   source 'robbyrussell.zsh-theme.erb'
-  owner 'harrison'
-  group 'harrison'
+  owner 'root'
+  group 'root'
   mode '0644'
 end
 
-template '/home/harrison/.zshrc' do
+template "#{home}/.zshrc" do
   source 'zshrc.erb'
-  owner 'harrison'
-  group 'harrison'
-  mode '0644'
+  owner "#{user}"
+  group "#{user}"
+  mode '0777'
 end
 
 execute 'change-shell-to-zsh' do
