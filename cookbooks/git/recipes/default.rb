@@ -7,11 +7,13 @@
 # All rights reserved - Do Not Redistribute
 #
 
+home = node['home']
+
 package 'git' do
   action :install
 end
 
-template '/home/harrison/.gitconfig' do
+template "#{home}/.gitconfig" do
   source 'gitconfig.erb'
   owner 'harrison'
   group 'harrison'
