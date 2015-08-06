@@ -34,7 +34,7 @@ template "#{home}/.oh-my-zsh/themes/robbyrussell.zsh-theme" do
   source 'robbyrussell.zsh-theme.erb'
   owner "#{user}"
   group "#{user}"
-	mode '0644'
+  mode '0644'
 end
 
 template '/root/.oh-my-zsh/themes/robbyrussell.zsh-theme' do

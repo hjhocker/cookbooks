@@ -8,6 +8,7 @@
 #
 
 home = node['home']
+user = Dir.home.split("/")[2]
 
 package 'git' do
   action :install
@@ -15,7 +16,7 @@ end
 
 template "#{home}/.gitconfig" do
   source 'gitconfig.erb'
-  owner 'harrison'
-  group 'harrison'
+  owner "#{user}"
+  group "#{user}"
   mode '0644'
 end
