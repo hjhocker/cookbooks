@@ -58,3 +58,10 @@ end
 execute 'change-root-to-zsh' do
   command 'sudo -i && chsh -s /bin/zsh'
 end
+
+directory "#{home}/bin/" do
+  owner "#{user}"
+  group "#{user}"
+  mode  "0644"
+  action :create
+end
