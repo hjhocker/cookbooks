@@ -3,6 +3,7 @@
       "recipe[shells]",
       "recipe[utilities]",
       "recipe[java]",
-      "recipe[git]"
+      "recipe[git]",
+      "recipe[tomcat7]"
     ]
 }

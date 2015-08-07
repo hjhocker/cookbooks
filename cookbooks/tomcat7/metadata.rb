@@ -1,0 +1,7 @@
+name             'tomcat7'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures tomcat7'
+long_description 'Installs/Configures tomcat7'
+version          '0.1.0'
