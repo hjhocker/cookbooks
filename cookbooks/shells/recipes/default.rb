@@ -52,11 +52,11 @@ template "#{home}/.zshrc" do
 end
 
 execute 'change-shell-to-zsh' do
-  command 'chsh -s /bin/zsh && env zsh'
+  command "chsh -s /bin/zsh #{user} && env zsh"
 end
 
 execute 'change-root-to-zsh' do
-  command 'sudo -i && chsh -s /bin/zsh'
+  command 'sudo -i && chsh -s /bin/zsh root && env zsh'
 end
 
 directory "#{home}/bin/" do
