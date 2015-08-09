@@ -1,0 +1,7 @@
+name             'nginx'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures nginx'
+long_description 'Installs/Configures nginx'
+version          '0.1.0'
