@@ -7,6 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
+home = node['home']
 foldername = node['foldername']
 folderpath = node['folderpath']
 user = node["username"]
@@ -19,3 +20,5 @@ directory fullpath do
   group "#{user}"
   mode "0755"
 end
+
+puts "haaaaaaaaaaaaaaaaaaa #{home}"

@@ -14,6 +14,8 @@ package 'git' do
   action :install
 end
 
+puts "home is #{home}"
+
 template "#{home}/.gitconfig" do
   source 'gitconfig.erb'
   owner "#{user}"
