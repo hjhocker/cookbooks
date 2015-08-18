@@ -16,7 +16,6 @@ package 'git' do
 end
 
 puts "home is #{home}"
-puts "test is " + "#{test}"
 
 template "#{home}/.gitconfig" do
   source 'gitconfig.erb'
