@@ -7,8 +7,14 @@
 # All rights reserved - Do Not Redistribute
 #
 
+user = node['user']
+
 ['docker.io', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', 'wget', 'g++', 'ruby1.9.1', 'ruby1.9.1-dev', 'rubygems1.9.1', 'irb1.9.1', 'rdoc1.9.1', 'build-essential', 'libopenssl-ruby1.9.1', 'libssl-dev', 'zlib1g-dev'].each do |pkg|  
   package pkg do
     action :install
   end
+end
+
+execute 'add-user-to-docker-group' do
+  command "usermod -a -G docker #{user}"
 end
