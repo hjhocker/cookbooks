@@ -10,12 +10,14 @@
 home = node['home']
 user = node['username']
 test = node['test']
+platform = node['platform']
 
 package 'git' do
   action :install
 end
 
 puts "home is #{home}"
+puts "the platform is #{platform}"
 
 template "#{home}/.gitconfig" do
   source 'gitconfig.erb'
