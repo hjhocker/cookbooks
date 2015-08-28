@@ -1,0 +1,1377 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers | DigitalOcean</title>
+
+<meta name="description" content="As your infrastructure requirements expand, managing each server by hand becomes an increasingly difficult task. This difficulty is compounded by requirements for reproducibility, which become necessary if a node fails or if horizontal scaling is need">
+<meta name="keywords" content="Configuration Management Chef">
+
+<meta name="og:title" content="How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers | DigitalOcean">
+<meta name="og:description" content="As your infrastructure requirements expand, managing each server by hand becomes an increasingly difficult task. This difficulty is compounded by requirements for reproducibility, which become necessary if a node fails or if horizontal scaling is need">
+<meta name="og:site_name" content="DigitalOcean">
+<meta name="og:type" content="article">
+
+<meta name="twitter:site" content="DigitalOcean">
+<meta name="twitter:title" content="How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers | DigitalOcean">
+<meta name="twitter:description" content="As your infrastructure requirements expand, managing each server by hand becomes an increasingly difficult task. This difficulty is compounded by requirements for reproducibility, which become necessary if a node fails or if horizontal scaling is need">
+<meta name="twitter:creator" content="DigitalOcean">
+
+  <meta name="twitter:card" content="summary">
+
+  <link rel='canonical' href='https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers'>
+
+
+    <link rel="stylesheet" media="all" href="/assets/community/application-76f9345d49f2bf97f7113472b9e68d98.css" />
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="2TE2HfHjB+dUHbBrpJ//r7kLim2zbMXDxdOYVD5ZSuwsteTAwq5OBjfDMlyIL7e3Weggvoiq9HNI6+xiYNLEHA==" />
+    <script type="text/javascript" src="//use.typekit.net/njm7orv.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script src="//cdn.optimizely.com/js/701281621.js"></script>
+    <script type="text/javascript">
+      if(window.analytics=window.analytics||[],window.analytics.included)window.console&&console.error&&console.error("analytics.js included twice");else{window.analytics.included=!0,window.analytics.methods=["identify","group","track","page","pageview","alias","ready","on","once","off","trackLink","trackForm","trackClick","trackSubmit"],window.analytics.factory=function(a){return function(){var n=Array.prototype.slice.call(arguments);return n.unshift(a),window.analytics.push(n),window.analytics}};for(var i=0;i<window.analytics.methods.length;i++){var key=window.analytics.methods[i];window.analytics[key]=window.analytics.factory(key)}window.analytics.load=function(a){var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+a+"/analytics.min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(n,t)},window.analytics.SNIPPET_VERSION="2.0.9",
+      window.analytics.load("puo3uv968t")}
+      window.analytics.page();
+    </script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/community/tutorials/feed">
+    <script src="/assets/community/application-e8c82b40bd6ab5d0a70317a4c83b3bab.js"></script>
+  </head>
+  <body class="tutorials-controller tutorial-single" data-env="production", data-prefix="/community" data-user-id="" data-facebook-app-id="694818843983011">
+    <script>
+//<![CDATA[
+
+    $(function() {
+      dataLayer = [$.parseJSON('{\"user_id\":\"\",\"is_community_page\":true,\"content_type\":\"tutorial\",\"author\":\"Justin Ellingwood\",\"difficulty\":\"advanced\",\"created_at\":\"2015-03-02T23:31:30.291Z\",\"published_at\":\"2015-03-03T16:05:10.663Z\",\"updated_at\":\"2015-03-03T16:05:10.588Z\",\"article_tags\":\"Configuration Management, Chef\"}')];
+    });
+
+//]]>
+</script>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KHWBBT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KHWBBT');</script>
+<!-- End Google Tag Manager -->
+    
+
+    <div class='outside_viewport'>
+        <div id='share-modal' class='modal fade mini-modal' style="display: none;">
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h1>Share</h1>
+          <a class='close-button' data-dismiss='modal' href=''><span class='icon icon-close-light'></span></a>
+        </div>
+        <div class='modal-body'>
+
+          <div class='social-sharing social-sharing-container'>
+            <ul class='bottom '>
+              <li class='shareBtn' id='sbTwitter'>
+                <a href='http://twitter.com/share?text=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=twshare' class='share-icon share-popup' title='Share on Twitter' >
+                  <span class='sIcon icon-bird'></span>
+                </a>
+                
+                <a href='http://twitter.com/share?text=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=twshare' class='share-link share-popup' title='Share on Twitter' >
+                  Twitter
+                </a>
+                
+              </li>
+
+              <li class='shareBtn' id='sbFacebook'>
+                <a class='share-icon facebook-share' href='https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=fbshare' onclick='' title='Share on Facebook'>
+                  <span class='sIcon icon-facebook-B'></span>
+                </a>
+
+                <a class='share-link facebook-share' href='https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=fbshare' onclick='' title='Share on Facebook'>
+                  Facebook
+                </a>
+              </li>
+              <li class='shareBtn' id='sbGoogle'>
+                <a href='https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=gpshare' class='share-icon share-popup' title='Share on Google+'>
+                  <span class='sIcon icon-google-plus-B'></span>
+                </a>
+
+                <a href='https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=gpshare' class='share-link share-popup' title='Share on Google+'>
+                  Google+
+                </a>
+              </li>
+              <li class='shareBtn' id='sbYC'>
+                <a href='https://news.ycombinator.com/submitlink?t=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;u=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=hnshare' class='share-icon share-popup ' target='_blank' title='Submit to Hacker News'>
+                  <span class='sIcon icon-hacker-news'></span>
+                </a>
+
+                <a href='https://news.ycombinator.com/submitlink?t=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;u=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=hnshare' class='share-link share-popup' target='_blank' title='Submit to Hacker News'>
+                  Hacker News
+                </a>
+              </li>
+            </ul>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id='contents-modal' class='modal fade mini-modal' style="display: none;">
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h1>Contents</h1>
+          <a class='close-button' data-dismiss='modal' href=''><span class='icon icon-close-light'></span></a>
+        </div>
+        <div class='modal-body'>
+
+          <div class='table-of-contents-modal open'></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='tutorial-info-bar-container top'>
+  <div class='tutorial-info-bar'>
+    <div class='left-section'>
+        <div class='tutorial-author-avatar'>
+          <a href="/community/users/jellingwood"><div class="mod-avatar mod-avatar-small"><img alt="jellingwood" class="avatar avatar-small" src="https://secure.gravatar.com/avatar/60d901f61a6146e14a3e989bc1f4ef11?secure=true&d=identicon" width="80" height="80" /><span class="mod-star" title="MOD" data-toggle="tooltip" data-container="body"><span class="mod-star-icon" /></span></div></a>
+        </div>
+
+        <div class='author-and-date'>
+          <div class='tutorial-author'>
+            <div class='by'>By: </div><a href="/community/users/jellingwood">Justin Ellingwood</a>
+          </div>
+        </div>
+
+      <div class="upvotes upvoted tutorial-upvote"><form data-upvotable="tutorial_1504" data-upvotable-type="tutorial" class="upvote-form upvote signed-out-upvote" action="/community/upvotes/toggle?upvote%5Bupvotable_id%5D=1504&amp;upvote%5Bupvotable_type%5D=Tutorial" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="8K0E7TkNSNI33yWYnStAeF8kYXrhTMJprNlmG7tQIVUFKdYwCkABM1QBp6+xmwhgv8fLqdqK89kh4RIt5duvpQ==" />
+    <button type="submit" disabled="disabled" data-toggle="modal" data-target="#sign-in-modal"><span class='icon-upvote-heart-small upvote-heart' data-toggle="modal" data-target="#sign-in-modal" data-return-url= "" title="Do you find this post helpful? Show the author by Hearting it!" data-placement="bottom"></span></button>
+
+</form><span class="upvote-text"><span class="hearted-text">Hearted</span><span class="heart-text">Heart</span></span><div class="upvote-count ">14</div></div>
+
+      <div class='tutorial-comments-count'>
+        <span class='icon icon-new-comment'></span>
+        4
+      </div>
+    </div>
+
+    <div class='right-section'>
+      <div class='section-item social-sharing-item'><div class='sharing'>
+  <a class='share-button' href='#' data-toggle="modal" data-target="#share-modal">
+    <span class='icon icon-share-square'></span>
+    Share
+  </a>
+</div>
+
+</div>
+      <div class='section-item table-of-contents-triggers'><div class='toc-trigger '>
+  <a href='javascript:void(0);'>
+    <span class='title'>Contents</span>
+    <span class='icon icon-close-light'></span>
+    <span class='icon icon-arrow-down'></span>
+  </a>
+</div>
+
+
+
+<div class='toc-trigger-mobile' data-toggle="modal" data-target="#contents-modal">
+  <a href='javascript:void(0);'>
+    <span class='title'>Contents</span>
+    <span class='icon icon-arrow-down'></span>
+  </a>
+</div>
+
+
+</div>
+    </div>
+  </div>
+</div>
+
+  <div class='table-of-contents '></div>
+  <div id='share-modal' class='modal fade mini-modal' style="display: none;">
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h1>Share</h1>
+          <a class='close-button' data-dismiss='modal' href=''><span class='icon icon-close-light'></span></a>
+        </div>
+        <div class='modal-body'>
+
+          <div class='social-sharing social-sharing-container'>
+            <ul class='top '>
+              <li class='shareBtn' id='sbTwitter'>
+                <a href='http://twitter.com/share?text=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=twshare' class='share-icon share-popup' title='Share on Twitter' >
+                  <span class='sIcon icon-bird'></span>
+                </a>
+                
+                <a href='http://twitter.com/share?text=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=twshare' class='share-link share-popup' title='Share on Twitter' >
+                  Twitter
+                </a>
+                
+              </li>
+
+              <li class='shareBtn' id='sbFacebook'>
+                <a class='share-icon facebook-share' href='https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=fbshare' onclick='' title='Share on Facebook'>
+                  <span class='sIcon icon-facebook-B'></span>
+                </a>
+
+                <a class='share-link facebook-share' href='https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=fbshare' onclick='' title='Share on Facebook'>
+                  Facebook
+                </a>
+              </li>
+              <li class='shareBtn' id='sbGoogle'>
+                <a href='https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=gpshare' class='share-icon share-popup' title='Share on Google+'>
+                  <span class='sIcon icon-google-plus-B'></span>
+                </a>
+
+                <a href='https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=gpshare' class='share-link share-popup' title='Share on Google+'>
+                  Google+
+                </a>
+              </li>
+              <li class='shareBtn' id='sbYC'>
+                <a href='https://news.ycombinator.com/submitlink?t=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;u=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=hnshare' class='share-icon share-popup ' target='_blank' title='Submit to Hacker News'>
+                  <span class='sIcon icon-hacker-news'></span>
+                </a>
+
+                <a href='https://news.ycombinator.com/submitlink?t=How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers&amp;u=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers?utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers&amp;utm_medium=community&amp;utm_source=hnshare' class='share-link share-popup' target='_blank' title='Submit to Hacker News'>
+                  Hacker News
+                </a>
+              </li>
+            </ul>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  <div id="newsletter-signup-dialog" class="newsletter-signups-dialog optimizely-newsletter-hide" data-newsletter-signup-dialog data-article-target=".content-body">
+  <div class="pull-right">
+  <a href="javascript:;" class="newsletter-signups-dialog-dismiss" data-newsletter-signup-dismiss>&times;</a>
+
+</div>
+<h4 class="newsletter-signups-dialog-title">
+  Sign up for our newsletter.
+</h4>
+<p class="newsletter-signups-dialog-description">
+  Get the latest tutorials on SysAdmin and open source topics.
+</p>
+<form class="newsletter-signup" id="new_newsletter_signup" data-newsletter-signup="true" action="/community/newsletter_signup" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+
+  <div class="newsletter-signup-ajax-error" data-newsletter-signup-ajax-error></div>
+
+
+  <div class="form-group">
+    <input placeholder="email@example.com" required="required" class="field" type="email" name="newsletter_signup[email]" id="newsletter_signup_email" />
+  </div>
+
+  <button data-disable-with="Sign Up" class="button blue-button">
+    Sign Up
+  </button>
+
+</form>
+
+</div>
+
+
+    </div>
+
+      <div class="mobile-nav">
+  
+<div class="account-buttons">
+    <div id="entrance">
+      <a id="sign-up" class="button" href="/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+      <a id="log-in" class="button" href="/community/auth/digitalocean">Log In</a>
+    </div>
+</div>
+    
+  <a class="close-panel icon-close" href="javascript:void(0);"></a>
+
+  <form class="mobile-search" action="/community/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+    <span class='icon icon-search-thin'></span>
+    <input type="text" name="q" id="q" placeholder="Search" />
+    <button name="button" type="submit" class="icon-btn">submit</button>
+</form>
+  
+<nav>
+
+  <ul>
+    <li><a href="/community/tutorials">Tutorials</a></li>
+    <li><a href="/community/questions">Questions</a></li>
+    <li><a href="/community/projects">Projects</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+  
+</div>
+
+
+      
+    	<header>
+  <div class='main-menu-container'>
+    <div class='wrapper'>
+      <div class='logo'>
+        <a class="" href="https://www.digitalocean.com/">
+          <span class='icon icon-cloud'></span>
+</a>
+        <a class="" href="/community">
+          <span class='logo-community-text'>Community</span>
+</a>      </div>
+      
+      <a class="mobile-nav-toggle icon-menu-thin" data-role="left">
+        <span>Menu</span>
+      </a>
+
+      
+<nav>
+
+  <ul>
+    <li><a href="/community/tutorials">Tutorials</a></li>
+    <li><a href="/community/questions">Questions</a></li>
+    <li><a href="/community/projects">Projects</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+      
+      
+<div class="account-buttons">
+    <div id="entrance">
+      <a id="sign-up" class="button" href="/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+      <a id="log-in" class="button" href="/community/auth/digitalocean">Log In</a>
+    </div>
+</div>
+      <div class='header-search open'>
+  <form action="/community/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+    <span class='icon icon-search-thin'></span>
+    <input type="text" name="q" id="q" placeholder="Search" autocomplete="off" spellcheck="off" class="header-search-input" data-algolia-application-id="6ZHEUVKJ88" data-algolia-api-key="c5470567eae7fa1177d43222e18ba086" />
+    <button name="button" type="submit" class="icon-btn">submit</button>
+</form></div>
+
+<div class="search-results-dropdown dropdown" data-root-path="https://www.digitalocean.com/community">
+  <div class="container">
+    <div class='header-search-results-list'></div>
+
+    <div id="btn-wrap">
+      <a class="more-search-results" data-search-path="/community/search" href="/community/search">
+        <span class='icon-mag'></span>
+        View All Results
+</a>    </div>
+  </div>
+</div>
+
+<script type='text/template' id='autocomplete-hits-template'>
+  <div class="inner-search">
+    <ul>
+        {{#hits}}
+          <li>
+            <span class='icon icon-{{type}}'></span>
+            <a href='{{url}}'>{{{_highlightResult.title.value}}}</a>
+          </li>
+        {{/hits}}
+    </ul>
+  </div>
+</script>
+      <div class='clearfix'></div>
+    </div>
+  </div>
+  
+
+  <div class='wrapper'>
+    
+  </div>
+</header>
+      
+        <div class="flash-container"></div>
+
+
+      
+      
+      <div class='wrapper layout-wrapper'>
+
+        
+
+
+
+  <div class='tutorial-image-mobile-spacer'></div>
+
+<div class='section-content section-content-growable content'>
+  <div class="container">
+    
+
+      <div class='info-cta'>
+    <a class="icon-close-light" href="javascript:void();"></a>
+    We hope you find this tutorial helpful. In addition to guides like this one, we provide simple cloud infrastructure for developers. <a href="https://www.digitalocean.com/?utm_medium=community&amp;utm_source=community_gencta&amp;utm_campaign=needaserver&amp;utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers">
+        Learn more &rarr;
+</a>  </div>
+
+  
+    <h1 class='content-title'>How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers</h1>
+
+    <span class='meta-section tags'>
+      <span class='meta-value'><span class="tutorial-date">March  3, 2015</span> <spanc class="hashtag-icon"></span> <a class="" href="/community/tags/configuration-management?type=tutorials">Configuration Management</a>, <a class="" href="/community/tags/chef?type=tutorials">Chef</a> <a class="" href="/community/tags/ubuntu?type=tutorials">Ubuntu</a></span>
+    </span>
+
+      <div class="tutorial-series-container collapsed">
+    <div class='section-content'>
+
+      <h2 class='tutorial-series-heading'>Tutorial Series</h2>
+
+          <div class="tutorial-series-toggle">
+            This tutorial is part 2 of 8 in the series:
+            <a data-reveal="fast" href="#tutorial_series_10">Getting Started Managing Your Infrastructure Using Chef</a>
+          </div>
+
+        <div id="tutorial_series_10" class="tutorial-series hidden">
+          <a class="icon-close" href="javascript:void(0);"></a>
+          <h3 class="series-title"><a href="/community/tutorial_series/getting-started-managing-your-infrastructure-using-chef">Getting Started Managing Your Infrastructure Using Chef</a></h2>
+
+            <div class="description">
+              Chef is a powerful configuration management system that can be used to programmatically control your infrastructure environment.  Leveraging the Chef system allows you to easily recreate your environments in a predictable manner by automating the entire system configuration.  In this series, we will introduce you to Chef concepts and demonstrate how to install and utilize the its powerful features to manage your servers.
+            </div>
+          <ol class="tutorial-series-list">
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-understand-the-chef-configuration-environment-on-a-vps">How To Understand the Chef Configuration Environment on a VPS</a></h2>
+
+      <div class='feedable-date'>November 20, 2013</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          9
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          1
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="active">
+      <h2><a href="/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers">How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers</a></h2>
+
+      <div class='feedable-date'>March  2, 2015</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          14
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          4
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-install-a-chef-server-workstation-and-client-on-ubuntu-vps-instances">How to Install a Chef Server, Workstation, and Client on Ubuntu VPS Instances</a></h2>
+
+      <div class='feedable-date'>January 30, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          7
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          36
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-create-simple-chef-cookbooks-to-manage-infrastructure-on-ubuntu">How To Create Simple Chef Cookbooks to Manage Infrastructure on Ubuntu</a></h2>
+
+      <div class='feedable-date'>February  3, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          12
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          13
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-use-roles-and-environments-in-chef-to-control-server-configurations">How To Use Roles and Environments in Chef to Control Server Configurations</a></h2>
+
+      <div class='feedable-date'>February  4, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          6
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          6
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-use-the-digitalocean-plugin-for-knife-to-manage-droplets-in-chef">How To Use the DigitalOcean Plugin for Knife to Manage Droplets in Chef</a></h2>
+
+      <div class='feedable-date'>February  9, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          3
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          7
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-manage-your-cluster-with-chef-and-knife-on-ubuntu">How To Manage Your Cluster with Chef and Knife on Ubuntu</a></h2>
+
+      <div class='feedable-date'>October 30, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          2
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          0
+        </div>
+
+          <span class="author">By <a href="/community/users/nikz">Nik Wakelin</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-automatically-add-new-droplets-to-your-configuration-management-system">How To Automatically Add New Droplets to your Configuration Management System</a></h2>
+
+      <div class='feedable-date'>February 25, 2015</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          3
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          0
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+</ol>
+  <a class="prev-tutorial" href="/community/tutorials/how-to-understand-the-chef-configuration-environment-on-a-vps">Previous Tutorial</a>
+  <a class="next-tutorial" href="/community/tutorials/how-to-install-a-chef-server-workstation-and-client-on-ubuntu-vps-instances">Next Tutorial</a>
+
+        </div>
+    </div>
+  </div>
+
+  </div>
+
+  <div class='content-body tutorial-content' data-growable-markdown>
+    <h3 id="introduction">Introduction</h3>
+
+<p>As your infrastructure requirements expand, managing each server by hand becomes an increasingly difficult task.  This difficulty is compounded by the requirement for reproducibility, which becomes necessary if a node fails or if horizontal scaling is needed.</p>
+
+<p>Configuration management solutions are designed to address these issues by turning your infrastructure administration into a code base.  Instead of performing individual tasks on a number of machines, these tools allow you to commit your requirements to a central location where each component can connect, pull down their configuration, and apply it.</p>
+
+<p>In a <a href="https://www.digitalocean.com/community/articles/how-to-understand-the-chef-configuration-environment-on-a-vps">previous guide</a>, we talked, on a conceptual level, about the general structure of Chef components and the way in which they interact to achieve the administrator's objectives.  We talked about relevant terminology and discussed the responsibility of each piece.</p>
+
+<p>In this guide, we will install the actual software.  We will set up a centralized Chef server which will store and serve configuration instructions and node profiling information.  We will also set up a workstation where the administrator can work with the code base and alter the characteristics of the infrastructure.  We will follow this up by bootstrapping a new node to bring it under the management of the Chef ecosystem.</p>
+
+<h2 id="prerequisites-and-goals">Prerequisites and Goals</h2>
+
+<p>We will be setting up version 12 of Chef in this guide.  Configuration can be significantly different between versions, so ensure that you are operating within the same major version number as this guide for best results.</p>
+
+<p>The <a href="http://docs.chef.io/server/install_server_pre.html#hardware-software">Chef documentation</a> tells us that your Chef server should have at least 4 cores and 4 GB of RAM.  It should also have a <a href="http://docs.chef.io/server/install_server.html#prerequisites">64-bit operating system</a>.  For our guide, we will be using an 4 core / 8 GB DigitalOcean Droplet with 64-bit Ubuntu 14.04.</p>
+
+<p>The workstation and nodes have very few requirements.  We will use Ubuntu 14.04 on those as well for consistency.</p>
+
+<p>When we are finished, we will have a centralized Chef server to store and serve our configuration data.  Our workstation will be used to make changes, upload them to the server, and bootstrap and manage new nodes.  The node represents a single server within our infrastructure.</p>
+
+<h2 id="configure-the-chef-server">Configure the Chef Server</h2>
+
+<p>We will begin by setting up the Chef server.  Remember, Chef recommends at least 4 cores and 4 GB of RAM for this server, so plan accordingly.</p>
+
+<h3 id="ensure-that-the-server-is-accessible-by-hostname">Ensure that the Server is Accessible by Hostname</h3>
+
+<p>Once you are logged into the server you plan on installing the Chef server onto, the first task you need to perform is to ensure that the hostname of the server is a resolvable fully qualified domain name (FQDN) or IP address.  You can check this by typing:</p>
+<pre class="code-pre "><code langs="">hostname -f
+</code></pre>
+<p>The result should be an address where the server can be reached.  If this is not the case, you can set this to a domain name or IP address where the server can be reached by editing this file:</p>
+<pre class="code-pre "><code langs="">sudo nano /etc/hosts
+</code></pre>
+<p>The file will look similar to this:</p>
+<pre class="code-pre "><code langs="">127.0.1.1 <span class="highlight">current_hostname</span> <span class="highlight">current_hostname_alias</span>
+127.0.0.1 localhost
+
+. . .
+</code></pre>
+<p>Modify the top line to reflect the fully qualified domain name or the IP address, followed by a space and any alias you want to use for your host.  Add a line <em>beneath</em> the two lines shown that has your server's public IP address in the first column, and the information that you modified at the end of the <code>127.0.1.1</code> line to the end.  It should look something like this:</p>
+<pre class="code-pre "><code langs="">127.0.1.1 <span class="highlight">fqdn_or_IP_address</span> <span class="highlight">host_alias</span>
+127.0.0.1 localhost
+<span class="highlight">IP_address</span> <span class="highlight">fqdn_or_IP_address</span> <span class="highlight">host_alias</span>
+</code></pre>
+<p>So, if I <em>do not</em> have a domain name, my public IP address is <code>123.123.123.123</code>, and if I also want my host reachable by the hostname "chef", I could have a file that looks like this:</p>
+<pre class="code-pre "><code langs="">127.0.1.1 123.123.123.123 chef
+127.0.0.1 localhost
+123.123.123.123 123.123.123.123 chef
+</code></pre>
+<p>If, on the other hand, this server has the fully qualified domain name of <code>chef.example.com</code> and an IP address of <code>234.234.234.234</code>, my file might look something like this instead:</p>
+<pre class="code-pre "><code langs="">127.0.1.1 chef.example.com chef
+127.0.0.1 localhost
+234.234.234.234 chef.example.com chef
+</code></pre>
+<p>Save and close the file when you are finished.  You can check that the value was set correctly by typing:</p>
+<pre class="code-pre "><code langs="">hostname -f
+</code></pre>
+<p>The result should be a value that you can use to reach your Chef server from anywhere in your infrastructure.</p>
+
+<h3 id="download-and-install-the-chef-12-server-software">Download and Install the Chef 12 Server software</h3>
+
+<p>Next, we can go ahead and download the Chef 12 server software.  You can find the package that must be installed by visiting the Chef site.  Specifically, for an Ubuntu installation, you can follow <a href="https://downloads.chef.io/chef-server/ubuntu/#/">this link</a>.</p>
+
+<p>Under the "Ubuntu Linux 14.04" header, right-click on the download link and copy the link location:</p>
+
+<p><img src="https://assets.digitalocean.com/articles/chef12_ubuntu1404/download_chef_server.png" alt="Chef server download"></p>
+
+<p>Back on your server, change to your home directory.  Paste the link you copied and use the <code>wget</code> command to download the package.  The link you copied may be different from the one below if there has been a minor version update since this writing:</p>
+<pre class="code-pre "><code langs="">cd ~
+wget https://web-dl.packagecloud.io/chef/stable/packages/ubuntu/trusty/chef-server-core_<span class="highlight">12.0.5-1</span>_amd64.deb
+</code></pre>
+<p>Once the download is complete, install the package by typing:</p>
+<pre class="code-pre "><code langs="">sudo dpkg -i chef-server-core_*.deb
+</code></pre>
+<p>This will install the base Chef 12 system onto the server.  If you have selected a server with less powerful hardware than the recommended amount, this step may fail.</p>
+
+<p>Once the installation is complete, you must call the <code>reconfigure</code> command, which configures the components that make up the server to work together in your specific environment:</p>
+<pre class="code-pre "><code langs="">sudo chef-server-ctl reconfigure
+</code></pre>
+<h3 id="create-an-admin-user-and-organization">Create an Admin User and Organization</h3>
+
+<p>Next, we need to create an admin user.  This will be the username that will have access to make changes to the infrastructure components in the organization we will be creating.</p>
+
+<p>We can do this using the <code>user-create</code> subcommand of the <code>chef-server-ctl</code> command.  The command requires a number of fields to be passed in during the creation process.  The general syntax is:</p>
+<pre class="code-pre "><code langs="">chef-server-ctl user-create <span class="highlight">USERNAME</span> <span class="highlight">FIRST_NAME</span> <span class="highlight">LAST_NAME</span> <span class="highlight">EMAIL</span> <span class="highlight">PASSWORD</span>
+</code></pre>
+<p>We will include this information, and will also add <code>-f</code>, an additional flag, onto the end in order to specify a filename in which to output our new user's private RSA key.  We will need this in order to authenticate using the <code>knife</code> management command later.</p>
+
+<p>For our example, we will create a user with the following information:</p>
+
+<ul>
+<li><strong>Username</strong>: admin</li>
+<li><strong>First Name</strong>: admin</li>
+<li><strong>Last Name</strong>: admin</li>
+<li><strong>Email</strong>: admin@example.com</li>
+<li><strong>Password</strong>: examplepass</li>
+<li><strong>Filename</strong>: admin.pem</li>
+</ul>
+
+<p>The command needed to create a user with this information is (you should change this to reflect your information, especially the password):</p>
+<pre class="code-pre "><code langs="">sudo chef-server-ctl user-create admin admin admin admin@example.com <span class="highlight">examplepass</span> -f admin.pem
+</code></pre>
+<p>You should now have a private key called <code>admin.pem</code> in your current directory.</p>
+
+<p>Now that you have a user, you can create an organization with the <code>org-create</code> subcommand.  An organization is simply a grouping of infrastructure and configuration within Chef.  The command has the following general syntax:</p>
+<pre class="code-pre "><code langs="">chef-server-ctl org-create <span class="highlight">SHORTNAME</span> <span class="highlight">LONGNAME</span> --association_user <span class="highlight">USERNAME</span>
+</code></pre>
+<p>The short name is the name that you will use to refer to the organization from within Chef.  The long name is the actual name of the organization.  The <code>--association_user</code> specifies the username that has access to administer the organization.  Again, we will add the <code>-f</code> flag so that we can specify the name of the file to place the private key.  The key that will be created is used to validate new clients as part of the organization until they can get their own unique client key.</p>
+
+<p>We will create an organization with the following qualities:</p>
+
+<ul>
+<li><strong>Short Name</strong>: digitalocean</li>
+<li><strong>Long Name</strong>: DigitalOcean, Inc.</li>
+<li><strong>Association User</strong>: admin</li>
+<li><strong>Filename</strong>: digitalocean-validator.pem</li>
+</ul>
+
+<p>To create an organization with the above qualities, we will use the following command:</p>
+<pre class="code-pre "><code langs="">sudo chef-server-ctl org-create digitalocean "DigitalOcean, Inc." --association_user admin -f digitalocean-validator.pem
+</code></pre>
+<p>Following this, you should have two <code>.pem</code> key files in your home directory.  In our case, they will be called <code>admin.pem</code> and <code>digitalocean-validator.pem</code>.  We will need to connect to this server and download these keys to our workstation momentarily.  For now though, our Chef server installation is complete.</p>
+
+<h2 id="configure-a-chef-workstation">Configure a Chef Workstation</h2>
+
+<p>Now that our Chef server is up and running, our next course of action is to configure a workstation.  The actual infrastructure coordination and configuration does not take place on the Chef server.  This work is done on a workstation which then uploads the data to the server to influence the Chef environment.</p>
+
+<h3 id="clone-the-chef-repo">Clone the Chef Repo</h3>
+
+<p>The Chef configuration for your infrastructure is maintained in a hierarchical file structure known collectively as a Chef repo.  The general structure of this can be found in a GitHub repository provided by the Chef team.  We will use <code>git</code> to clone this repo onto our workstation to work as a basis for our infrastructure's Chef repository.</p>
+
+<p>First, we need to install <code>git</code> through the <code>apt</code> packaging tools.  Update your packaging index and install the tool by typing:</p>
+<pre class="code-pre "><code langs="">sudo apt-get update
+sudo apt-get install git
+</code></pre>
+<p>Once you have <code>git</code> installed, you can clone the Chef repository onto your machine.  For this guide, we will simply clone it to our home directory:</p>
+<pre class="code-pre "><code langs="">cd ~
+git clone https://github.com/chef/chef-repo.git
+</code></pre>
+<p>This will pull down the basic Chef repo structure into a directory called <code>chef-repo</code> in your home directory.  </p>
+
+<h3 id="putting-your-chef-repo-under-version-control">Putting your Chef Repo Under Version Control</h3>
+
+<p>The configurations authored within the Chef repo itself are best managed within a version control system in the same way that you would manage code.  Since we cloned the repo above, a <code>git</code> repo has already been initialized.</p>
+
+<p>To set your workstation up for new commits, you should do a few things.</p>
+
+<p>First, set the name and email that <code>git</code> will use to tag any commits you make.  This is a requirement for <code>git</code> to accept commits.  We set this globally so that any <code>git</code> repo we create will use these values:</p>
+<pre class="code-pre "><code langs="">git config --global user.name "<span class="highlight">Your Name</span>"
+git config --global user.email "<span class="highlight">username</span>@<span class="highlight">domain.com</span>"
+</code></pre>
+<p>Next, we will tell <code>git</code> to ignore any information contained within the <code>~/chef-repo/.chef</code> directory.  We will create this directory in a few minutes to store some sensitive information.  For now, we can add this location to our <code>.gitignore</code> file so that <code>git</code> does not store data that should not be exposed to other people:</p>
+<pre class="code-pre "><code langs="">echo ".chef" &gt;&gt; ~/chef-repo/.gitignore
+</code></pre>
+<p>Since we have made a change to the <code>.gitignore</code> file, we can go ahead and make our first new commit to the version control system.  First, add all of the modified files to the current staging area:</p>
+<pre class="code-pre "><code langs="">cd ~/chef-repo
+git add .
+</code></pre>
+<p>Now, commit the changes.  We will use the <code>-m</code> flag to specify an in-line commit message describing the changes we are making:</p>
+<pre class="code-pre "><code langs="">git commit -m "Excluding the ./.chef directory from version control"
+</code></pre>
+<p>Our Chef repo is now under version control.  As we author configurations for our infrastructure, we can use the above two commands to keep our <code>git</code> repo up-to-date.</p>
+
+<h3 id="download-and-install-the-chef-development-kit">Download and Install the Chef Development Kit</h3>
+
+<p>Next, we need to install the Chef Development Kit, a suite of software designed for Chef workstations.  This includes many utilities that will be useful when designing configurations for your infrastructure.  The tool we are interested in at this point is the bundled <code>knife</code> command, which can communicate with and control both the Chef server and any Chef clients.</p>
+
+<p>We can find the Chef 12 Development Kit on the Chef website.  Since we are using Ubuntu 14.04 as our workstation, the page <a href="https://downloads.chef.io/chef-dk/ubuntu/#/">here</a> will contain the latest download link.  Note that at the time of this writing, the download link only references Ubuntu 12.04 and Ubuntu 13.10, but it should still install without issue on Ubuntu 14.04.</p>
+
+<p>Right-click on the download button under "Ubuntu Linux" and copy the link location:</p>
+
+<p><img src="https://assets.digitalocean.com/articles/chef12_ubuntu1404/download_chef_dev_kit.png" alt="Ubuntu Chef dev kit"></p>
+
+<p>Back on your workstation, change to your home directory.  Paste the link you copied and use the <code>wget</code> command to download the package.  The link you copied may be different from the one below if a newer development kit version has been released:</p>
+<pre class="code-pre "><code langs="">cd ~
+wget https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_<span class="highlight">0.4.0-1</span>_amd64.deb
+</code></pre>
+<p>Once the <code>.deb</code> package has been downloaded, you can install it by typing:</p>
+<pre class="code-pre "><code langs="">sudo dpkg -i chefdk_*.deb
+</code></pre>
+<p>After the installation, you can verify that all of the components are available in their expected location through the new <code>chef</code> command:</p>
+<pre class="code-pre "><code langs="">chef verify
+</code></pre>
+<p>If your workstation will primarily be used to manage Chef for your infrastructure, you will likely want to default to the version of Ruby installed with Chef.  You can do this by modifying your <code>.bash_profile</code> so that Chef's Ruby takes precedence:</p>
+<pre class="code-pre "><code langs="">echo 'eval "$(chef shell-init bash)"' &gt;&gt; ~/.bash_profile
+</code></pre>
+<p>Afterwards, you can source your <code>.bash_profile</code> file to set the correct environmental variables for the current session:</p>
+<pre class="code-pre "><code langs="">source ~/.bash_profile
+</code></pre>
+<p>If you wish to manage your Ruby versions independently, you can skip the above steps.</p>
+
+<h3 id="download-the-authentication-keys-to-the-workstation">Download the Authentication Keys to the Workstation</h3>
+
+<p>At this point, your workstation has all of the software needed to interact with a Chef server and compose infrastructure configurations.  However, it is not yet configured to interact with your Chef server and your environment.  In this section, we'll download the credentials we created on the Chef server.</p>
+
+<p>We will use the <code>scp</code> utility to download the user key and the organization validator key that we created on the Chef server.  Before doing so, we will create the hidden directory where we will store these files:</p>
+<pre class="code-pre "><code langs="">mkdir ~/chef-repo/.chef
+</code></pre>
+<p>The method that you use to connect to the Chef server will determine how exactly we go about downloading the keys.  Follow the method below that matches your setup:</p>
+
+<h4 id="how-to-download-keys-when-connecting-to-a-chef-server-with-passwords">How To Download Keys when Connecting to a Chef Server with Passwords</h4>
+
+<p>If you connect to your Chef server through SSH using password-based authentication, the <code>scp</code> command will work without significant modification.</p>
+
+<p>On your workstation, specify the username and domain name or IP address used to connect to the Chef server.  Follow this immediately with a colon (:) and the path to the file you wish to download.  After adding a space, indicate the directory on the <em>local</em> computer where you wish the download the files to be placed (<code>~/chef-repo/.chef</code> in our case).</p>
+
+<p>If you log into the Chef server using the <code>root</code> user account, your commands will look something like this.  Remember to change both the domain name or IP address and the name of the key files you are trying to download to match your environment:</p>
+<pre class="code-pre "><code langs="">scp root@<span class="highlight">server_domain_or_IP</span>:/root/<span class="highlight">admin.pem</span> ~/chef-repo/.chef
+scp root@<span class="highlight">server_domain_or_IP</span>:/root/<span class="highlight">digitalocean-validator.pem</span> ~/chef-repo/.chef
+</code></pre>
+<p>If you connect to your Chef server using a non-root user, the commands will look more like this:</p>
+<pre class="code-pre "><code langs="">scp <span class="highlight">username</span>@<span class="highlight">server_domain_or_IP</span>:/home/<span class="highlight">username</span>/<span class="highlight">admin.pem</span> ~/chef-repo/.chef
+scp <span class="highlight">username</span>@<span class="highlight">server_domain_or_IP</span>:/home/<span class="highlight">username</span>/<span class="highlight">digitalocean-validator.pem</span> ~/chef-repo/.chef
+</code></pre>
+<h4 id="how-to-download-keys-when-connecting-to-a-chef-server-using-ssh-keys">How To Download Keys when Connecting to a Chef Server Using SSH Keys</h4>
+
+<p>If, instead, you connect to your Chef server using SSH keys (recommended), you will need to perform some additional steps.</p>
+
+<p>First, leave your SSH session with the workstation.  We will need to reconnect momentarily with a new parameter:</p>
+<pre class="code-pre "><code langs="">exit
+</code></pre>
+<p>Once you are back on your local computer, you will need to add the SSH keys you use to connect to the Chef server to an SSH agent.  OpenSSH, the standard SSH suite, includes an SSH agent that can be started by typing:</p>
+<pre class="code-pre "><code langs="">eval $(ssh-agent)
+</code></pre>
+<p>You should see output that looks like this (the number will likely be different):</p>
+<pre class="code-pre "><code langs="">Agent pid 13881
+</code></pre>
+<p>Once the agent is started, you can add your SSH key to it:</p>
+<pre class="code-pre "><code langs="">ssh-add
+</code></pre><pre class="code-pre "><code langs="">Identity added: /home/<span class="highlight">demo</span>/.ssh/id_rsa (rsa w/o comment)
+</code></pre>
+<p>This will keep your SSH key stored in memory.  Now, you can <em>forward</em> the stored key to your workstation as you connect by using the <code>-A</code> option with <code>ssh</code>.  This will allow you to connect to any computer from your workstation as if you were connecting from your local computer:</p>
+<pre class="code-pre "><code langs="">ssh -A <span class="highlight">username</span>@<span class="highlight">workstation_domain_or_IP</span>
+</code></pre>
+<p>Now, you can connect to your Chef server without needing a password using the forwarded SSH credentials.  If the keys on your Chef server were available through the root user, the commands you will need will look similar to this.  Remember to change the Chef server domain name or IP address and the key names as needed:</p>
+<pre class="code-pre "><code langs="">scp root@<span class="highlight">server_domain_or_IP</span>:/root/<span class="highlight">admin.pem</span> ~/chef-repo/.chef
+scp root@<span class="highlight">server_domain_or_IP</span>:/root/<span class="highlight">digitalocean-validator.pem</span> ~/chef-repo/.chef
+</code></pre>
+<p>If the SSH key configured for the Chef server instead is used to authenticate you to a regular user account, your commands will look like this instead:</p>
+<pre class="code-pre "><code langs="">scp <span class="highlight">username</span>@<span class="highlight">server_domain_or_IP</span>:/home/<span class="highlight">username</span>/<span class="highlight">admin.pem</span> ~/chef-repo/.chef
+scp <span class="highlight">username</span>@<span class="highlight">server_domain_or_IP</span>:/home/<span class="highlight">username</span>/<span class="highlight">digitalocean-validator.pem</span> ~/chef-repo/.chef
+</code></pre>
+<h3 id="configuring-knife-to-manage-your-chef-environment">Configuring Knife to Manage your Chef Environment</h3>
+
+<p>Now that you have your Chef credentials available on your workstation, we can configure the <code>knife</code> command with the information it needs to connect to and control your Chef infrastructure.  This is done through a <code>knife.rb</code> file that we will place in the <code>~/chef-repo/.chef</code> directory along with our keys.</p>
+
+<p>Open up a file called <code>knife.rb</code> in that directory in your text editor:</p>
+<pre class="code-pre "><code langs="">nano ~/chef-repo/.chef/knife.rb
+</code></pre>
+<p>In this file, paste the following information:</p>
+<pre class="code-pre "><code langs="">current_dir = File.dirname(__FILE__)
+log_level                :info
+log_location             STDOUT
+node_name                "<span class="highlight">name_for_workstation</span>"
+client_key               "#{current_dir}/<span class="highlight">name_of_user_key</span>"
+validation_client_name   "<span class="highlight">organization_validator_name</span>"
+validation_key           "#{current_dir}/<span class="highlight">organization_validator_key</span>"
+chef_server_url          "https://<span class="highlight">server_domain_or_IP</span>/organizations/<span class="highlight">organization_name</span>"
+syntax_check_cache_path  "#{ENV['HOME']}/.chef/syntaxcache"
+cookbook_path            ["#{current_dir}/../cookbooks"]
+</code></pre>
+<p>The following items should be adjusted to suit your infrastructure:</p>
+
+<ul>
+<li><strong><code>node_name</code></strong>: This specifies the name that <code>knife</code> will use to connect to your Chef server.  This should match your user name.</li>
+<li><strong><code>client_key</code></strong>: This should be the name and path to the user key that you copied over from the Chef server.  We can use the <code>#{current_dir}</code> snippet to fill in the path if the key is in the same directory as the <code>knife.rb</code> file.</li>
+<li><strong><code>validation_client_name</code></strong>:  This is the name of the validation client that <code>knife</code> will use to bootstrap new nodes.  This will take the form of your organization short name, followed by <code>-validator</code>.</li>
+<li><strong><code>validation_key</code></strong>: Like the <code>client_key</code>, this includes the name and path to the validation key you copied from the Chef server.  Again, you can use the <code>#{current_dir}</code> Ruby snippet to specify the current directory if the validation key is in the same directory as the <code>knife.rb</code> file.</li>
+<li><strong><code>chef_server_url</code></strong>: This is the URL where the Chef server can be reached.  It should begin with <code>https://</code>, followed by your Chef server's domain name or IP address.  Afterwards, the path to your organization should be specified by appending <code>/organizations/<span class="highlight">your_organization_name</span></code>.</li>
+</ul>
+
+<p>For our guide, the <code>knife.rb</code> file will look similar to this.  You still need to adjust the server's domain name or IP address if you are following along:</p>
+<pre class="code-pre "><code langs="">current_dir = File.dirname(__FILE__)
+log_level                :info
+log_location             STDOUT
+node_name                "admin"
+client_key               "#{current_dir}/admin.pem"
+validation_client_name   "digitalocean-validator"
+validation_key           "#{current_dir}/digitalocean-validator.pem"
+chef_server_url          "https://<span class="highlight">server_domain_or_IP</span>/organizations/digitalocean"
+syntax_check_cache_path  "#{ENV['HOME']}/.chef/syntaxcache"
+cookbook_path            ["#{current_dir}/../cookbooks"]
+</code></pre>
+<p>When you are finished, save and close the <code>knife.rb</code> file.</p>
+
+<p>Now, we will test the configuration file by trying out a simple <code>knife</code> command.  We need to be in our <code>~/chef-repo</code> directory for our configuration file to be read correctly:</p>
+<pre class="code-pre "><code langs="">cd ~/chef-repo
+knife client list
+</code></pre>
+<p>This first attempt should fail with an error that looks like this:</p>
+<pre class="code-pre "><code langs="">ERROR: SSL Validation failure connecting to host: server_domain_or_IP - SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed
+ERROR: Could not establish a secure connection to the server.
+Use `knife ssl check` to troubleshoot your SSL configuration.
+If your Chef Server uses a self-signed certificate, you can use
+`knife ssl fetch` to make knife trust the server's certificates.
+
+Original Exception: OpenSSL::SSL::SSLError: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed
+</code></pre>
+<p>This occurs because we do not have our Chef server's SSL certificate on our workstation.  We can acquire this by typing:</p>
+<pre class="code-pre "><code langs="">knife ssl fetch
+</code></pre>
+<p>This should add the Chef server's certificate file to a list in our <code>~/chef-repo/.chef</code> directory:</p>
+<pre class="code-pre "><code langs="">WARNING: Certificates from server_domain_or_IP will be fetched and placed in your trusted_cert
+directory (/home/demo/chef-repo/.chef/trusted_certs).
+
+Knife has no means to verify these are the correct certificates. You should
+verify the authenticity of these certificates after downloading.
+
+Adding certificate for server_domain_or_IP in /home/demo/chef-repo/.chef/trusted_certs/server_domain_or_IP.crt
+</code></pre>
+<p>After the SSL certificate has been fetched, the previous command should now work:</p>
+<pre class="code-pre "><code langs="">knife client list
+</code></pre><pre class="code-pre "><code langs="">digitalocean-validator
+</code></pre>
+<p>If the above command correctly returns, your workstation is now set up to control your Chef environment.</p>
+
+<h2 id="bootstrapping-a-new-node-with-knife">Bootstrapping a New Node with Knife</h2>
+
+<p>With our Chef server and workstation configured, we can begin using Chef to configure new servers within our infrastructure. </p>
+
+<p>This happens through a process called "bootstrapping" in which the Chef client executable is installed on the new computer and the organizational validator key is passed along as well.  The new node then contacts the Chef server with the validator key and, in return, receives its own unique client key and any configuration that has been assigned to it.  This process gets the new server into its initial state and sets it up for any future management.</p>
+
+<p>To connect to the new server, we will need a few pieces of information about the new node:</p>
+
+<ul>
+<li>The domain name or IP address where it can be reached</li>
+<li>The username used to complete administrative actions.  This can be either <code>root</code>, or a user configured with <code>sudo</code> privileges.</li>
+<li>A method of logging in as the above user.  This can be either the password, or the ability to use an SSH key.</li>
+<li>A method of performing administrative tasks.  For <code>root</code> users, this is unnecessary.  For users relying on <code>sudo</code> privileges, a password is generally necessary.</li>
+</ul>
+
+<p>The general syntax of the command will be:</p>
+<pre class="code-pre "><code langs="">knife bootstrap <span class="highlight">node_domain_or_IP</span> [options]
+</code></pre>
+<p>Some common options you may end up using are:</p>
+
+<ul>
+<li><strong><code>-x</code></strong>: Used to specify the username to authenticate with through SSH.  This is usually required.</li>
+<li><strong><code>-N</code></strong>: The new name for the node, as displayed within Chef.  Leaving this out will usually result in the hostname being used for the Chef node name.</li>
+<li><strong><code>-P</code></strong>: Used to specify the password for the username on the remote server.  This is necessary if <strong>either</strong> the SSH session requires password authentication <strong>or</strong> if the username requires a password for <code>sudo</code> commands.</li>
+<li><strong><code>--sudo</code></strong>: If the username on the remote server will need to use <code>sudo</code> to perform administrative actions, this flag is needed.  By default, it will prompt for the <code>sudo</code> password.</li>
+<li><strong><code>--use-sudo-password</code></strong>: If you are already providing the password for the user with the <code>-P</code> flag, using this flag <strong>in addition</strong> to the <code>--sudo</code> flag will use the <code>-P</code> password without prompting.</li>
+<li><strong><code>-A</code></strong>: This option forwards SSH keys to the remote host to login rather than using password authentication.</li>
+</ul>
+
+<p>When using the <code>-A</code> option, you must start an SSH agent on your local computer, add the SSH key that can be used to connect to the new node, and forward that information to your workstation by connecting with the <code>-A</code> flag initially.  More information about how to do this can be found in the workstation configuration section regarding downloading the keys from the Chef server.</p>
+
+<p>Using the above information, it is possible to construct the correct bootstrapping commands for a variety of situations.</p>
+
+<p>For example, to bootstrap a node with the name "testing", using the username <code>demo</code>, which is configured with <code>sudo</code> privileges, and which needs a password for SSH and the <code>sudo</code> validation, we can type:</p>
+<pre class="code-pre "><code langs="">knife bootstrap <span class="highlight">node_domain_or_IP</span> -N testing -x demo -P <span class="highlight">password</span> --sudo --use-sudo-password
+</code></pre>
+<p>If we want to bootstrap using the <code>root</code> user, with SSH key authentication using keys available on the workstation, and wish to keep use the node's hostname as the Chef node name, we can type:</p>
+<pre class="code-pre "><code langs="">knife bootstrap <span class="highlight">node_domain_or_IP</span> -x root -A
+</code></pre>
+<p>If we want to use SSH keys to authenticate to a <code>sudo</code> user, we will still need to provide a password using the <code>-P</code> flag, the <code>--sudo</code> flag, and the <code>--use-sudo-password</code> flag to avoid prompts:</p>
+<pre class="code-pre "><code langs="">knife bootstrap <span class="highlight">node_domain_or_IP</span> -x <span class="highlight">demo</span> -A -P <span class="highlight">password</span> --sudo --use-sudo-password -N <span class="highlight">name</span>
+</code></pre>
+<p>If you are in the above scenario, but do not mind being promted for the <code>sudo</code> password, you can instead just type this:</p>
+<pre class="code-pre "><code langs="">knife bootstrap <span class="highlight">node_domain_or_IP</span> -x <span class="highlight">demo</span> -A --sudo -N <span class="highlight">name</span>
+</code></pre>
+<p>Once your new node is bootstrapped, you should have a new client:</p>
+<pre class="code-pre "><code langs="">knife client list
+</code></pre><pre class="code-pre "><code langs="">digitalocean-validator
+<span class="highlight">name</span>
+</code></pre>
+<p>You should also have a new node of the same name:</p>
+<pre class="code-pre "><code langs="">knife node list
+</code></pre><pre class="code-pre "><code langs=""><span class="highlight">name</span>
+</code></pre>
+<p>You can use the above procedure to easily set up new Chef clients on any number of new servers.</p>
+
+<p>If you want to learn about how to automatically add your new DigitalOcean Droplets to your existing Chef infrastructure without having to bootstrap each one, <a href="https://www.digitalocean.com/community/tutorials/how-to-automatically-add-new-droplets-to-your-configuration-managment-system">check out this tutorial</a>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>After following this guide, you should have a fully functional Chef server configured for your infrastructure.  We have also set up a workstation that can be used to manage and maintain the configurations that Chef will apply to your infrastructure.  We have demonstrated how to use the <code>knife</code> command to bootstrap the servers that will be configured by Chef.</p>
+
+<p>In the <a href="https://www.digitalocean.com/community/tutorials/how-to-create-simple-chef-cookbooks-to-manage-infrastructure-on-ubuntu">next guide</a>, we will demonstrate how to design configurations for your nodes using some Chef constructs.  We will go over the fundamentals of Chef recipes and cookbooks as ways to control your infrastructure with declarative configs.</p>
+
+  </div>
+</div>
+
+<div class='tutorial-footer'>
+  <div class='tutorial-footer-details'>
+  <div class='section-content tutorial-public-actions'>
+    <div class="upvotes upvoted tutorial-upvote large-upvotes"><form data-upvotable="tutorial_1504" data-upvotable-type="tutorial" class="upvote-form upvote signed-out-upvote" action="/community/upvotes/toggle?upvote%5Bupvotable_id%5D=1504&amp;upvote%5Bupvotable_type%5D=Tutorial" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="pntdPSjDqOQdSqW1QSGXNC9lQXCbVTYA9rxHcyXkYkhT/4/gG47hBX6UJ4Jtkd8sz4bro6CTB7B7hDNFe2/suA==" />
+    <button type="submit" disabled="disabled" data-toggle="modal" data-target="#sign-in-modal"><span class='icon-upvote-heart-small upvote-heart' data-toggle="modal" data-target="#sign-in-modal" data-return-url= "" title="Do you find this post helpful? Show the author by Hearting it!" data-placement="top"></span></button>
+
+</form><span class="upvote-text"><span class="hearted-text">Hearted</span><span class="heart-text">Heart</span></span><div class="upvote-count ">14</div></div>
+
+    <div class='share-subscribe-actions'>
+      <span class="meta-section opt-in-switch off signed-out-subscribe">
+  <span class="meta-label subscribe-label">
+    <span class='subscription-label subscribe'>Subscribe</span>
+    <span class='subscription-label subscribed'>Subscribed</span>
+  </span>
+  <span class="meta-value"><a data-toggle="modal" data-target="#sign-in-modal" class="mini-switch-container" href="javascript:void(0);"><div class="mini-switch off signed-out-subscribe"><div class="switch-handle"></div></div></a></span>
+</span>
+      <div class='sharing'>
+  <a class='share-button' href='#' data-toggle="modal" data-target="#share-modal">
+    <span class='icon icon-share-square'></span>
+    Share
+  </a>
+</div>
+
+
+    </div>
+  </div>
+
+  <div class='section-content tutorial-contributors one'>
+      <div class='tutorial-footer-user'>
+        <div class='tutorial-footer-user-avatar-container'>
+          <a href="/community/users/jellingwood"><div class="mod-avatar mod-avatar-small"><img alt="jellingwood" class="avatar avatar-small" src="https://secure.gravatar.com/avatar/60d901f61a6146e14a3e989bc1f4ef11?secure=true&d=identicon" width="80" height="80" /><span class="mod-star" title="MOD" data-toggle="tooltip" data-container="body"><span class="mod-star-icon" /></span></div></a>
+        </div>
+        <div class='user-info'>
+          <div class='tutorial-user-type'>Author:</div>
+          <a href="/community/users/jellingwood">Justin Ellingwood</a>
+        </div>
+      </div>
+
+
+  </div>
+</div>
+
+    <div class="tutorial-series-container ">
+    <div class='section-content'>
+
+      <h2 class='tutorial-series-heading'>Tutorial Series</h2>
+
+
+        <div id="tutorial_series_10" class="tutorial-series ">
+          
+          <h3 class="series-title"><a href="/community/tutorial_series/getting-started-managing-your-infrastructure-using-chef">Getting Started Managing Your Infrastructure Using Chef</a></h2>
+
+            <div class="description">
+              Chef is a powerful configuration management system that can be used to programmatically control your infrastructure environment.  Leveraging the Chef system allows you to easily recreate your environments in a predictable manner by automating the entire system configuration.  In this series, we will introduce you to Chef concepts and demonstrate how to install and utilize the its powerful features to manage your servers.
+            </div>
+          <ol class="tutorial-series-list">
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-understand-the-chef-configuration-environment-on-a-vps">How To Understand the Chef Configuration Environment on a VPS</a></h2>
+
+      <div class='feedable-date'>November 20, 2013</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          9
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          1
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="active">
+      <h2><a href="/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers">How To Set Up a Chef 12 Configuration Management System on Ubuntu 14.04 Servers</a></h2>
+
+      <div class='feedable-date'>March  2, 2015</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          14
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          4
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-install-a-chef-server-workstation-and-client-on-ubuntu-vps-instances">How to Install a Chef Server, Workstation, and Client on Ubuntu VPS Instances</a></h2>
+
+      <div class='feedable-date'>January 30, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          7
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          36
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-create-simple-chef-cookbooks-to-manage-infrastructure-on-ubuntu">How To Create Simple Chef Cookbooks to Manage Infrastructure on Ubuntu</a></h2>
+
+      <div class='feedable-date'>February  3, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          12
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          13
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-use-roles-and-environments-in-chef-to-control-server-configurations">How To Use Roles and Environments in Chef to Control Server Configurations</a></h2>
+
+      <div class='feedable-date'>February  4, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          6
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          6
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-use-the-digitalocean-plugin-for-knife-to-manage-droplets-in-chef">How To Use the DigitalOcean Plugin for Knife to Manage Droplets in Chef</a></h2>
+
+      <div class='feedable-date'>February  9, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          3
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          7
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-manage-your-cluster-with-chef-and-knife-on-ubuntu">How To Manage Your Cluster with Chef and Knife on Ubuntu</a></h2>
+
+      <div class='feedable-date'>October 30, 2014</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          2
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          0
+        </div>
+
+          <span class="author">By <a href="/community/users/nikz">Nik Wakelin</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+    <li class="">
+      <h2><a href="/community/tutorials/how-to-automatically-add-new-droplets-to-your-configuration-management-system">How To Automatically Add New Droplets to your Configuration Management System</a></h2>
+
+      <div class='feedable-date'>February 25, 2015</div>
+      <div class="meta">
+        <div class='points'>
+          <span class='icon-upvote-heart-small'></span>
+          3
+        </div>
+
+        <div class='response-count'>
+          <span class='icon icon-new-comment'></span>
+          0
+        </div>
+
+          <span class="author">By <a href="/community/users/jellingwood">Justin Ellingwood</a></span>
+      </div>
+      <div class="arrow-left"></div>
+    </li>
+</ol>
+
+        </div>
+    </div>
+  </div>
+
+  <div class='tutorial-ctas'>
+  <div class='section-content'>
+    <div class='cta-description'>
+      <h2>Spin up an SSD cloud server in under a minute.</h2>
+
+      <p>Simple setup. Full root access. Straightforward pricing.</p>
+
+      <a class="cloud-tutorial-cta" href="https://www.digitalocean.com/?utm_medium=community&amp;utm_source=community_gencta&amp;utm_campaign=needaserver&amp;utm_content=how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers">Deploy Server</a>
+    </div>
+  </div>
+</div>
+    <div class='related-tutorials'>
+    <div class='section-content'>
+      <h2>Related Tutorials</h2>
+
+      <ul>
+            <li><a class="related-link" href="/community/tutorials/how-to-use-roles-and-environments-in-chef-to-control-server-configurations">How To Use Roles and Environments in Chef to Control Server Configurations</a></li>
+            <li><a class="related-link" href="/community/tutorials/how-to-install-and-use-cfengine-community-edition-on-ubuntu-14-04">How to Install and Use CFEngine Community Edition on Ubuntu 14.04</a></li>
+            <li><a class="related-link" href="/community/tutorials/how-to-automate-installing-wordpress-on-ubuntu-14-04-using-ansible">How To Automate Installing WordPress on Ubuntu 14.04 Using Ansible</a></li>
+            <li><a class="related-link" href="/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-14-04">How to Install and Configure Ansible on Ubuntu 14.04</a></li>
+            <li><a class="related-link" href="/community/tutorials/how-to-set-up-a-masterless-puppet-environment-on-ubuntu-14-04">How To Set Up a Masterless Puppet Environment on Ubuntu 14.04</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class='content-comments'>
+  <div class='section-content'>
+    <div class="tutorial commentable" id="tutorial_1504">
+
+  <div class="comments-header">
+    <h4 class="comments-count"><span>4 Comments</span></h4>
+  </div>
+
+  <div class="response no-avatar  response-form">
+
+  <div class="js-display-on-error flash error hidden"></div>
+  <form class="content-form disabled-form" id="new_comment" action="/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers/comments" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+    <textarea name="comment[content]" id="comment_content" placeholder="Leave a comment..." class="js-comment-content tutorial-comment-field" data-markdown="true">
+</textarea>
+
+      <div class="log-in-notice "><a href="/community/auth/digitalocean">Log In to Comment</a></div>
+
+    <div class='clearfix'></div>
+</form></div>
+
+
+  <div class="comments">
+    <ul class="response-list">
+          <a class="js-click-on-load hidden" rel="nofollow" data-remote="true" href="/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers/comments">Load</a>
+    </ul>
+
+      <div class='comments-spinner'><div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+</div>
+  </div>
+
+
+  <div class='load-more-container'></div>
+</div>
+
+  </div>
+</div>
+
+<div class='creative-commons'>
+  <a class="creative-commons-image" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img rel="license" alt="Creative Commons License" src="/assets/community/creativecommons-9c86f7905fb655a10c78331faeca4e1f.png" /></a>
+    <div class='license-text'>This work is licensed under a <a rel='license' href='https://creativecommons.org/licenses/by-nc-sa/4.0/'>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</div>
+</div>
+
+
+
+
+
+        <div class="clearfix"></div>
+    	</div>
+
+    	<footer class='footer'>
+  <div class='footer-icon'>
+    <span class='icon icon-sammy'></span>
+  </div>
+
+  <div class='copyright'>
+    Copyright &copy; 2015 DigitalOcean&trade; Inc.
+  </div>
+
+  <ul class='main-nav-links'>
+    <li><a href="/community">Community</a></li>
+    <li><a href="/community/tutorials">Tutorials</a></li>
+    <li><a href="/community/questions">Questions</a></li>
+    <li><a href="/community/projects">Projects</a></li>
+    <li><a href="/community/tags">Tags</a></li>
+    <li>
+      <a href="/community/tutorials/feed">
+        RSS <span class="icon-rss"></span>
+</a>    </li>
+  </ul>
+
+  <br />
+
+  <ul class='secondary-nav-links'>
+
+    <li><a href="https://www.digitalocean.com/legal/terms/">Terms, Privacy, &amp; Copyright</a></li>
+    <li><a href="https://www.digitalocean.com/security/">Security</a></li>
+    <li><a data-toggle="modal" data-target="#report-a-bug-modal" href="#">Report a Bug</a></li>
+    <li><a href="/community/get-paid-to-write">Get Paid to Write</a></li>
+  </ul>
+</footer>
+
+
+
+
+
+    <div id='sign-in-modal' class='modal fade mini-modal' style="display: none;">
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h1>Sign Up</h1>
+        <a class='close-button' data-dismiss='modal' href=''><span class='icon icon-close-light'></span></a>
+      </div>
+      <div class='modal-body'>
+        <div class='sign-in-message'>Not so fast, you must have an account before you can do that.</div>
+
+        <div class='sign-in-modal-actions'>
+          <a class="sign-in-link button blue-button" data-default-url="/community/auth/digitalocean" href="/community/auth/digitalocean">Log In</a>
+          <a class="sign-up-link button green-button" data-default-url="/community/auth/digitalocean?display=sessionless+register" href="/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+  <script>
+    $(function() {
+      init_sharing();
+      new NewsletterSignup();
+      new GrowableMarkdown({ target: '[data-growable-markdown]' });
+    });
+  </script>
+
+  <div id='report-a-bug-modal' class='modal fade mini-modal' style="display: none;">
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h1>Report a Bug</h1>
+          <a class='close-button' data-dismiss='modal' href=''><span class='icon icon-close-light'></span></a>
+        </div>
+        <div class='modal-body'>
+          <div class='report-a-bug-message text-center'>Use this form to report bugs related to the Community</div>
+          <div class='report-a-bug-actions do-form'>
+            <div class='form-wrap'>
+              <form class="new_bug_report" id="new_bug_report" action="/community/bug_reports" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="w+Fs4iqH1moF/jLuFW/w1xi7cPHytmX71450zjnXjuA2Zb4/Gcqfi2YgsNk537jP+FjaIslwVEtatgD4Z1wAEA==" />
+                <fieldset>
+                  <div class="field">
+                    <input placeholder="Name" type="text" name="bug_report[name]" id="bug_report_name" />
+                  </div>
+                  <div class="field">
+                    <input placeholder="Email" required="required" type="text" name="bug_report[email]" id="bug_report_email" />
+                  </div>
+                  <div class="field">
+                      <textarea placeholder="Message" required="required" name="bug_report[message]" id="bug_report_message">
+</textarea>
+                  </div>
+
+                  <div class="field actions">
+                    <input type="submit" name="commit" value="Submit" class="button" />
+                  </div>
+                </fieldset>
+</form>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </body>
+</html>
+

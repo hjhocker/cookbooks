@@ -1,2 +1,4 @@
+trusted_certs/
+*.pem
 *.deb
 cache
