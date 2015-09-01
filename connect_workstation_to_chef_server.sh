@@ -5,4 +5,6 @@ echo '104.238.136.190 vultr.guest' >> /etc/hosts
 
 knife ssl fetch
 knife client list
-knife bootstrap <IP_ADDRESS> -N bootstrop-test-node -x root -P <password> --sudo --use-sudo-password
+
+# Add this to bootstrap without ssl verification: --node-ssl-verify-mode none
+knife bootstrap <IP_ADDRESS> -N bootstrap-test-node -x root -P <password> --sudo --use-sudo-password

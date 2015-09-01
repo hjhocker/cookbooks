@@ -1,5 +1,7 @@
 # See https://docs.getchef.com/config_rb_knife.html for more information on knife configuration options
 
+ssl_verify_mode :verify_none
+
 current_dir = File.dirname(__FILE__)
 log_level                :info
 log_location             STDOUT
