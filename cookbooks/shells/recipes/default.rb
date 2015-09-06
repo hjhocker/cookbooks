@@ -10,6 +10,8 @@
 home = node['home']
 user = node['username']
 
+puts "The platform is " + node['platform']
+
 package 'zsh' do
   action :install
 end
