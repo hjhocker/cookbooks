@@ -3,5 +3,7 @@
 	name = <%= node['fullname'] %>
 [alias]
 	s=status --short
+[alias]
+        lc = log ORIG_HEAD.. --stat --no-merges
 [push]
 	default = matching
