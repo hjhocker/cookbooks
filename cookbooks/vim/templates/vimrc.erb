@@ -1,0 +1,24 @@
+execute pathogen#infect('~/.vim/bundle/{}')
+syntax on
+filetype plugin indent on
+set number
+set t_Co=256
+set encoding=utf-8
+
+" Open NerdTree with command+p
+map <C-p> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+" autocmd VimEnter * NERDTree
+
+"Airline configuration
+" Always show the airline status bar
+set laststatus=2
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+" " Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+" Set the theme
+let g:airline_theme='luna'
+
+" PowerLine configuration
+let g:airline_powerline_fonts = 1
