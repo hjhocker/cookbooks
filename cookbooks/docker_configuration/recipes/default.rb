@@ -25,8 +25,10 @@ execute "apt-get-update" do
 end
 
 package 'lxc-docker-1.4.1' do
-  action :install
+  action :remove
 end
+
+#Use this to install docker: wget -qO- https://get.docker.com/ | sh
 
 execute 'add user to docker group' do
   command "usermod -a -G docker #{user}"
