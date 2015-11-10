@@ -64,6 +64,6 @@ end
 directory "#{home}/bin/" do
   owner "#{user}"
   group "#{user}"
-  mode  "0644"
+  mode  "0766"
   action :create
 end

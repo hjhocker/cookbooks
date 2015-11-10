@@ -10,7 +10,7 @@
 user = node['user']
 home = node['home']
 
-['tree', 'nodejs-legacy', 'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', 'wget', 'g++', 'ruby1.9.1', 'ruby1.9.1-dev', 'rubygems1.9.1', 'irb1.9.1', 'rdoc1.9.1', 'build-essential', 'libopenssl-ruby1.9.1', 'libssl-dev', 'zlib1g-dev'].each do |pkg|  
+['tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', 'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', 'wget', 'g++'].each do |pkg|  
   package pkg do
     action :install
   end
