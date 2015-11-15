@@ -9,4 +9,5 @@
 custom_resource_httpd 'index' do
     action :create
     html_content '<h1>Hello Chef</h1>'
+    user "harrison"
 end
