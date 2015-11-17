@@ -9,8 +9,9 @@
 
 user = node['user']
 home = node['home']
+group = node['group']
 
-['tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', 'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', 'wget', 'g++'].each do |pkg|  
+['tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', 'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', 'wget', 'g++'].each do |pkg|
   package pkg do
     action :install
   end
@@ -22,6 +23,8 @@ end
   end
 end
 
-execute 'add-user-to-docker-group' do
-  command "usermod -a -G docker #{user}"
+utilities_add_user_to_group "add #{user} to #{group} group" do
+  action :create
+  username "#{user}"
+  groupname "#{group}"
 end
