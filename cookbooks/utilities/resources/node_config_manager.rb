@@ -4,7 +4,6 @@ property :value, String
 
 action :create do
   add_property(property,value)
-  return
 end
 
 action :delete do
@@ -28,9 +27,9 @@ def remove_property(property)
 end
 
 def run_command(command)
-  Chef::Log.logger.warn("Going to run the command " + command)
+  Chef::Log.logger.info("Going to run the command " + command)
   cmd = Mixlib::ShellOut.new(command, :user => username, :cwd => '/tmp', :env => nil)
   cmd.run_command
-  Chef::Log.logger.warn("The response was " + cmd.stdout)
+  Chef::Log.logger.info("The response was " + cmd.stdout)
   cmd.stdout
 end
