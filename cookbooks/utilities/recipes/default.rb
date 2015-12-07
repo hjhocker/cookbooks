@@ -12,8 +12,13 @@ home = node['home']
 group = node['group']
 
 case node[:platform]
+  #Manage Ubuntu specific package
   when 'ubuntu'
-    ['unace', 'unrar', 'zip', 'unzip', 'p7zip-full', 'p7zip-rar', 'sharutils', 'rar', 'uudeview', 'mpack', 'arj', 'cabextract', 'file-roller', 'wine', 'winetricks', 'qbittorrent', 'pidgin', 'skype', 'qbittorrent', 'ffmpeg', 'vlc', 'synaptic', 'gimp', 'unity-tweak-tool', 'tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', 'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', 'wget', 'g++'].each do |pkg|
+    ['unace', 'unrar', 'zip', 'unzip', 'p7zip-full', 'p7zip-rar', 'sharutils', 'rar', 'uudeview', 'mpack',\
+       'arj', 'cabextract', 'file-roller', 'wine', 'winetricks', 'qbittorrent', 'pidgin', 'skype', 'qbittorrent', \
+       'ffmpeg', 'vlc', 'synaptic', 'gimp', 'unity-tweak-tool', 'tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', \
+       'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', \
+       'wget', 'g++'].each do |pkg|
       package pkg do
         action :install
       end
@@ -23,6 +28,7 @@ case node[:platform]
         action :remove
       end
   end
+  #End manage Ubuntu specific package
 end
 
 
@@ -37,7 +43,7 @@ end
 
 
 utilities_node_config_manager "configure the node proxy" do
-  action :create
+  action :delete
   property "key"
   value "value"
 end
