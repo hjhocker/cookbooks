@@ -2,8 +2,15 @@ property :username, String
 property :property, String
 property :value, String
 
+load_current_value do
+  value get_value_from_configuration(property)
+end
+
 action :create do
-  add_property(property,value)
+  converge_if_changed :value do
+    add_property(property,value)
+  end
+  Chef::Log.logger.warn("The node value for " + property + " is " + value)
 end
 
 action :delete do
@@ -14,7 +21,16 @@ def resolve_npm_path
   run_command("which npm")
 end
 
-def get_current_node_configuration
+def get_property_from_configuration(prop)
+  get_current_node_configuration()
+end
+
+def get_value_from_configuration(prop)
+  get_current_node_configuration()
+  'value2'
+end
+
+def get_current_node_configuration()
   run_command("npm config ls -l")
 end
 

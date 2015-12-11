@@ -44,6 +44,6 @@ end
 
 utilities_node_config_manager "configure the node proxy" do
   action :create
-  property "key"
+  property "key2"
   value "value"
 end
