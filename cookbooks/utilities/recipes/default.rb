@@ -42,8 +42,7 @@ when 'ubuntu', 'centos', 'debian', 'rhel', 'redhat', 'fedora'
 end
 
 
-utilities_node_config_manager "configure the node proxy" do
+utilities_node_config_manager "harrison" do
   action :create
-  property "key2"
-  value "value"
+  value "hocker"
 end
