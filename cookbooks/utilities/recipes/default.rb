@@ -41,12 +41,12 @@ when 'ubuntu', 'centos', 'debian', 'rhel', 'redhat', 'fedora'
   end
 end
 
-utilities_node_config_manager "harrison" do
+utilities_node_config_manager "key" do
   action :create
-  value "test"
+  value "key"
 end
 
-utilities_node_config_manager "harrison" do
+utilities_node_config_manager "key" do
   action :delete
 end
 
