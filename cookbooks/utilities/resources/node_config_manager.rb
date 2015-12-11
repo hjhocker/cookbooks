@@ -15,7 +15,7 @@ end
 
 action :delete do
   utilities_node_delete key do
-    action :create
+    action :delete
     field key
   end
 end

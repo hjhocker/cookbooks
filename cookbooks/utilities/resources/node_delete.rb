@@ -14,6 +14,13 @@ action :create do
   end
 end
 
+action :delete do
+  #puts("********The key is " + key)
+  converge_if_changed :field do
+    remove_property(key)
+  end
+end
+
 def get_value_from_configuration(key)
   get_current_node_configuration(key)
 end
@@ -24,14 +31,13 @@ end
 
 def get_current_node_configuration(key)
   content = run_command("npm config list")
-  response = key
   content.split("\n").each do |line|
     #puts("@@@@@@@ the line is " + line)
     if !key.nil? && key != "" && line.to_s.include?(key.to_s + " =") && line.to_s.include?("=")
-      response = ""
+      key = ""
     end
   end
-  response
+  key
 end
 
 def run_command(command)
