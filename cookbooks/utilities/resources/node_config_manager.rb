@@ -10,11 +10,14 @@ action :create do
   converge_if_changed :value do
     add_property(key,value)
   end
-  Chef::Log.logger.warn("\nThe node value for " + key + " is " + value)
+  #Chef::Log.logger.warn("\nThe node value for " + key + " is " + value)
 end
 
 action :delete do
-  remove_property(key)
+  utilities_node_delete key do
+    action :create
+    field key
+  end
 end
 
 def get_value_back(key)
@@ -36,7 +39,7 @@ end
 def get_current_node_configuration(key)
   content = run_command("npm config list")
   response = ""
-  puts("************** the key is " + key.to_s)
+  #puts("************** the key is " + key.to_s)
   content.split("\n").each do |line|
     if !key.nil? && line.to_s.include?(key.to_s + " =") && line.to_s.include?("=")
       response = line.to_s.split("=")[1].strip().gsub('"','')
@@ -59,6 +62,6 @@ def run_command(command)
   Chef::Log.logger.info("Going to run the command " + command)
   cmd = Mixlib::ShellOut.new(command, :user => username, :cwd => '/tmp', :env => nil)
   cmd.run_command
-  Chef::Log.logger.info("The response was " + cmd.stdout)
+  #Chef::Log.logger.info("The response was " + cmd.stdout)
   cmd.stdout
 end

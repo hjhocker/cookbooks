@@ -41,8 +41,19 @@ when 'ubuntu', 'centos', 'debian', 'rhel', 'redhat', 'fedora'
   end
 end
 
-
 utilities_node_config_manager "harrison" do
   action :create
-  value "hocker"
+  value "test"
+end
+
+utilities_node_config_manager "harrison" do
+  action :delete
+end
+
+utilities_node_config_manager "hahahaha" do
+  action :delete
+end
+
+utilities_node_config_manager "yoda" do
+  action :delete
 end
