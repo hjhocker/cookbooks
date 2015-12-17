@@ -41,9 +41,10 @@ when 'ubuntu', 'centos', 'debian', 'rhel', 'redhat', 'fedora'
   end
 end
 
-utilities_node_config_manager "key" do
-  action :create
-  value "key"
+utilities_node_config_manager "yoda-master" do
+  action :delete
+  username node['user']
+  value "taco"
 end
 
 utilities_node_config_manager "yoda" do
@@ -52,14 +53,8 @@ utilities_node_config_manager "yoda" do
   value "taco"
 end
 
-utilities_node_config_manager "key" do
+utilities_node_config_manager "yoda-master" do
   action :delete
-end
-
-utilities_node_config_manager "hahahaha" do
-  action :delete
-end
-
-utilities_node_config_manager "yoda" do
-  action :delete
+  username node['user']
+  value "taco"
 end
