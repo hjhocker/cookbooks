@@ -8,13 +8,20 @@
 #
 
 home = node['home']
-user = node['username']
+user = node['user']
 
 package 'git' do
   action :install
 end
 
 template "#{home}/.gitconfig" do
+  source 'gitconfig.erb'
+  owner "#{user}"
+  group "#{user}"
+  mode '0644'
+end
+
+template "/root/.gitconfig" do
   source 'gitconfig.erb'
   owner "#{user}"
   group "#{user}"

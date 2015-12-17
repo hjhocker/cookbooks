@@ -42,7 +42,10 @@ def get_current_node_configuration(key)
   #puts("************** the key is " + key.to_s)
   content.split("\n").each do |line|
     if !key.nil? && line.to_s.include?(key.to_s + " =") && line.to_s.include?("=")
-      response = line.to_s.split("=")[1].strip().gsub('"','')
+      check = line.to_s.split("=")[0].strip().gsub('"','')
+      if check.strip().eql?key
+        response = line.to_s.split("=")[1].strip().gsub('"','')
+      end
     end
   end
   puts("The response is " + response)

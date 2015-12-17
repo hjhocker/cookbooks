@@ -46,6 +46,12 @@ utilities_node_config_manager "key" do
   value "key"
 end
 
+utilities_node_config_manager "yoda" do
+  action :create
+  username node['user']
+  value "taco"
+end
+
 utilities_node_config_manager "key" do
   action :delete
 end

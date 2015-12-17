@@ -8,16 +8,19 @@
 #
 
 home = node['home']
-user = node['username']
+user = node['user']
 
 puts "The platform is " + node['platform']
 
-package 'zsh' do
-  action :install
+['zsh','git'].each do |pkg|
+  package pkg do
+    action :install
+  end
 end
 
-package 'git' do
-  action :install
+shells_git_stash "#{home}/.oh-my-zsh" do
+  action :create
+  username node['user']
 end
 
 git "#{home}/.oh-my-zsh/" do
@@ -26,10 +29,25 @@ git "#{home}/.oh-my-zsh/" do
   action :sync
 end
 
+shells_git_pop "#{home}/.oh-my-zsh" do
+  action :create
+  username node['user']
+end
+
+shells_git_stash "#{home}/.oh-my-zsh" do
+  action :create
+  username node['user']
+end
+
 git '/root/.oh-my-zsh/' do
   repository "https://github.com/robbyrussell/oh-my-zsh.git"
   reference "master"
   action :sync
+end
+
+shells_git_pop "#{home}/.oh-my-zsh" do
+  action :create
+  username node['user']
 end
 
 template "#{home}/.oh-my-zsh/themes/robbyrussell.zsh-theme" do
