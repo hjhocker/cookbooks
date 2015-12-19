@@ -33,9 +33,6 @@ case node[:platform]
     utilities_pip_install "pip install scipy" do
       action :create
     end
-    utilities_pip_install "pip install -U scikit-learn" do
-      action :create
-    end
   end
   #End manage Ubuntu specific package
 end
