@@ -1,5 +1,6 @@
 property :task, String, name_property: true
 property :field, String
+property :username, String
 
 action :create do
     run_command(task)

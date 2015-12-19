@@ -56,7 +56,7 @@ end
 utilities_node_config_manager "yoda" do
   action :create
   username node['user']
-  value "taco"
+  value "yoda"
 end
 
 utilities_node_config_manager "yoda-master" do
