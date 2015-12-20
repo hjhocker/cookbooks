@@ -14,7 +14,7 @@ group = node['group']
 case node[:platform]
   #Manage Ubuntu specific package
   when 'ubuntu'
-    ['python-dev', 'unace', 'unrar', 'zip', 'unzip', 'p7zip-full', 'p7zip-rar', 'sharutils', 'rar', 'uudeview', 'mpack',\
+    ['python-dev', 'python-pip', 'unace', 'unrar', 'zip', 'unzip', 'p7zip-full', 'p7zip-rar', 'sharutils', 'rar', 'uudeview', 'mpack',\
        'arj', 'cabextract', 'file-roller', 'wine', 'winetricks', 'qbittorrent', 'pidgin', 'skype', 'qbittorrent', \
        'ffmpeg', 'vlc', 'synaptic', 'gimp', 'unity-tweak-tool', 'tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', \
        'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', \
@@ -27,10 +27,13 @@ case node[:platform]
       package pkg do
         action :remove
       end
-    utilities_pip_install "pip install numpy" do
+    utilities_install_pip "pip" do
       action :create
     end
-    utilities_pip_install "pip install scipy" do
+    utilities_pip_install "numpy" do
+      action :create
+    end
+    utilities_pip_install "scipy" do
       action :create
     end
   end
@@ -64,3 +67,5 @@ utilities_node_config_manager "yoda-master" do
   username node['user']
   value "taco"
 end
+
+utilities_install_pip "pip"
