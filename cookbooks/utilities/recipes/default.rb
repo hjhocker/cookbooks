@@ -12,13 +12,13 @@ home = node['home']
 group = node['group']
 
 case node[:platform]
-  #Manage Ubuntu specific package
+  #Manage Ubuntu specific packagea
   when 'ubuntu'
     ['python-dev', 'python-pip', 'unace', 'unrar', 'zip', 'unzip', 'p7zip-full', 'p7zip-rar', 'sharutils', 'rar', 'uudeview', 'mpack',\
        'arj', 'cabextract', 'file-roller', 'wine', 'winetricks', 'qbittorrent', 'pidgin', 'skype', 'qbittorrent', \
        'ffmpeg', 'vlc', 'synaptic', 'gimp', 'unity-tweak-tool', 'tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', \
        'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', \
-       'wget', 'g++'].each do |pkg|
+       'wget', 'g++', 'libfreetype6-dev'].each do |pkg|
       package pkg do
         action :install
       end
@@ -34,6 +34,15 @@ case node[:platform]
       action :create
     end
     utilities_pip_install "scipy" do
+      action :create
+    end
+    utilities_vagrant_plugins "berkshelf" do
+      action :create
+    end
+    utilities_vagrant_plugins "vagrant-berkshelf" do
+      action :create
+    end
+    utilities_vagrant_plugins "vagrant-proxyconf" do
       action :create
     end
   end
