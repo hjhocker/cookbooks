@@ -38,12 +38,15 @@ case node[:platform]
     end
     utilities_vagrant_plugins "berkshelf" do
       action :create
+      not_if "vagrant plugin list | grep '^berkshelf ('"
     end
     utilities_vagrant_plugins "vagrant-berkshelf" do
       action :create
+      not_if "vagrant plugin list | grep '^vagrant-berkshelf ('"
     end
     utilities_vagrant_plugins "vagrant-proxyconf" do
       action :create
+      not_if "vagrant plugin list | grep '^vagrant-proxyconf ('"
     end
   end
   #End manage Ubuntu specific package
