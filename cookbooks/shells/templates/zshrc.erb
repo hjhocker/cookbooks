@@ -67,10 +67,9 @@ JAVA6_HOME=/usr/lib/jvm/java-6-openjdk-amd64/jre
 JAVA7_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
 JAVA8_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
-alias java6='export JAVA_HOME=$JAVA6_HOME'
-alias java7='export JAVA_HOME=$JAVA7_HOME'
-alias java8='export JAVA_HOME=$JAVA8_HOME'
-java8
+alias java6='export JAVA_HOME=$JAVA6_HOME; sudo update-alternatives --set java /usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java '
+alias java7='export JAVA_HOME=$JAVA7_HOME; sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java'
+alias java8='export JAVA_HOME=$JAVA8_HOME; sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java '
 
 alias df='df -h'
 alias restart_wifi='sudo service network-manager restart'
@@ -105,3 +104,12 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# User defined functions
+function remove_old_kernels_from_boot() {
+    kversion=$(uname -a | cut -d' ' -f3 | cut -d'-' -f1,2)
+    for file in $(ls /boot/ | grep -v $kversion)
+    do
+      rm -v $file
+    done
+}
