@@ -77,9 +77,6 @@ alias restart_wifi='sudo service network-manager restart'
 export ECLIM_HOME_MARS=$HOME/.eclim_mars
 export ECLIPSE_HOME=$HOME/.eclim_mars/eclipse
 
-#Helper alias to clean out old Linux Kernel versions
-alias remove-old-linux-kernels='sudo ls /root/'
-
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
@@ -106,10 +103,10 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # User defined functions
-function remove_old_kernels_from_boot() {
+function remove-old-linux-kernels() {
     kversion=$(uname -a | cut -d' ' -f3 | cut -d'-' -f1,2)
-    for file in $(ls /boot/ | grep -v $kversion)
+    for file in $(find /boot/ -maxdepth 1 -type f | grep -v $kversion)
     do
-      rm -v $file
+      sudo rm -frv $file
     done
 }
