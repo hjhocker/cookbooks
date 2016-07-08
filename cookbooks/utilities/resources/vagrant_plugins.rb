@@ -6,6 +6,10 @@ action :create do
     run_command("vagrant plugin install " + task)
 end
 
+action :status do
+  
+end
+
 def run_command(command)
   Chef::Log.logger.info("Going to run the command " + command)
   cmd = Mixlib::ShellOut.new(command, :user => username, :cwd => '/tmp', :env => nil)

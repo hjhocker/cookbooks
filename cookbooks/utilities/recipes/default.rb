@@ -18,7 +18,7 @@ case node[:platform]
        'arj', 'cabextract', 'file-roller', 'wine', 'winetricks', 'qbittorrent', 'pidgin', 'skype', 'qbittorrent', \
        'ffmpeg', 'vlc', 'synaptic', 'gimp', 'unity-tweak-tool', 'tmux', 'ngrep', 'tig', 'tree', 'nodejs-legacy', \
        'npm', 'youtube-dl', 'htop', 'gradle', 'maven', 'ipcalc', 'vagrant', 'mplayer', 'gdebi-core', 'vim', 'curl', \
-       'wget', 'g++', 'libfreetype6-dev', 'libxft-dev', 'ruby-dev', 'ntop'].each do |pkg|
+       'wget', 'g++', 'libfreetype6-dev', 'libxft-dev', 'ruby-dev', 'ntop', 'haskell-platform'].each do |pkg|
       package pkg do
         action :install
       end
